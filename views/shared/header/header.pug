@@ -4,4 +4,7 @@ div(id='page-header')
       img(class='logo', src='/images/logo.svg')
 
     div(class='col-md-6 hidden-md-down note')
-      span Here should be implemented dropdown country select
+      span 
+        select
+          each country in countryList
+            option(value = country.code) #{country.name}

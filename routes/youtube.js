@@ -10,7 +10,8 @@ router.get('/', async (req, res) => {
   const trends = await service.getTrendingVideos();
   res.render('youtube/index', {
     title: config.title,
-    videos: trends
+    videos: trends,
+    countryList: config.countryList
   });
 });
 
