@@ -1,0 +1,26 @@
+extends ../index
+
+block youtube
+  div(id='youtube')
+    div(class='row')
+      each video in videos
+        div(class='col-lg-4 col-md-6 col-sm-12')
+          a(class='card', href='/youtube/'+video.id)
+            div(class='img-container')
+              img(src=video.thumbnail)
+            div(class='video-desc')
+              p(class='text-ellipsis')
+                strong= video.title
+              p
+                span(class='col-md-4 col-xs-4 text-ellipsis')
+                  i(class='fa fa-eye', aria-hidden='true')
+                  span=video.viewCount
+                  span(class='hidden-md hidden-xs hidden-sm') &nbsp; views
+
+                span(class='col-md-4 col-xs-4 text-center text-ellipsis')
+                  span=video.publishedAt
+
+                span(class='col-md-4 col-xs-4 text-right text-ellipsis')
+                  i(class='fa fa-thumbs-up', aria-hidden='true')
+                  span=video.likeCount
+                  span(class='hidden-md hidden-xs hidden-sm') &nbsp; likes
