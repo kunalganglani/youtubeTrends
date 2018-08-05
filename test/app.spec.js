@@ -5,6 +5,7 @@ const { JSDOM } = jsdom;
 const server = require('../app');
 const expect = chai.expect;
 import { YoutubeService } from '../services/youtube';
+import { errorHandler } from '../middleware/error-handler';
 const response = require('./response');
 chai.should();
 const axios = require('axios');
@@ -56,6 +57,80 @@ describe('Server', function () {
         throw error;
       });
   });
+  it('should handle errors with errorHandler with environment as development', () =>{
+    let req = {
+      params: {},
+      body: {},
+      app: {
+        get(env){
+          if(env === 'env')
+          return 'development';
+          else{
+            return 'production';
+          }
+        }
+      }
+    };
+    let res = {
+      data: null,
+      code: null,
+      locals: {
+        message: '',
+        error: ''
+      },
+      status (status) {
+        this.code = status
+        return this
+      },
+      render(message) {
+        return message;
+      },
+      send (payload) {
+        this.data = payload
+      }
+    };
+    errorHandler({message: 'NotFoundError: Not Found'},req,res);
+    expect(res.locals.message).to.equal('NotFoundError: Not Found');
+    expect(JSON.stringify(res.locals.error)).to.equal(JSON.stringify({message: 'NotFoundError: Not Found'}));
+  });
+  it('should handle errors with errorHandler with environment as production', () =>{
+    let req = {
+      params: {},
+      body: {},
+      app: {
+        get(env){
+          if(env === 'env')
+          return 'production';
+          else{
+            return 'development';
+          }
+        }
+      }
+    };
+    let res = {
+      data: null,
+      code: null,
+      locals: {
+        message: '',
+        error: ''
+      },
+      status (status) {
+        this.code = status
+        return this
+      },
+      render(message) {
+        return message;
+      },
+      send (payload) {
+        this.data = payload
+      }
+    };
+    errorHandler({message: 'NotFoundError: Not Found'},req,res);
+    expect(res.locals.message).to.equal('NotFoundError: Not Found');
+    expect(JSON.stringify(res.locals.error)).to.equal(JSON.stringify({}));
+  });
+
+
 });
 describe('Select Dropdown', function () {
   it('reflects country matching the country code present in url', (done) => {
@@ -100,7 +175,6 @@ describe('Youtube Service', function () {
       }
     })
       .then(function (response) {
-        // console.log(response.data.trends.response.length);
         expect(response.data.trends.response).with.lengthOf(24);
       }).catch((error) => {
         throw error;
