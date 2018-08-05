@@ -7,6 +7,6 @@ div(id='page-header')
 
     div(class='col-md-6 hidden-md-down note')
       span 
-         select(onchange="onCountryChange(this.options[this.selectedIndex].value)")
+         select(onchange="onCountryChange(this.options[this.selectedIndex].value)", class="selectpicker",data-show-subtext="true",data-live-search="true")
           each country in countryList
-            option(value = country.code, selected= country.code == selectedCountry) #{country.name}
+            option(value = country.code, selected= country.code == selectedCountry, data-subtext= country.code) #{country.name}

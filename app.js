@@ -31,6 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap-select/dist/js'));
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap-select/dist/css'));
 
 app.use('/', indexRouter);
 app.use('/youtube', youtubeRouter);
