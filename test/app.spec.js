@@ -11,11 +11,8 @@ const axios = require('axios');
 const MockAdapter = require('axios-mock-adapter');
 // This sets the mock adapter on the default instance
 const mock = new MockAdapter(axios);
-
 chai.use(chaiHttp);
-
 describe('Server', function () {
-
   it('should redirect on youtube trends', (done) => {
     chai.request(server)
       .get('/').redirects(0)
@@ -25,7 +22,6 @@ describe('Server', function () {
         done();
       }).catch(done);
   });
-
   it('should open /youtube', (done) => {
     chai.request(server)
       .get('/youtube')
@@ -34,7 +30,6 @@ describe('Server', function () {
         done();
       }).catch(done);
   });
-
   it('should open /youtube/player', (done) => {
     chai.request(server)
       .get('/youtube/kLjJD2WH5GQ?countryCode=AF')
@@ -43,7 +38,6 @@ describe('Server', function () {
         done();
       });
   });
-
   it('should send 200 response with Country Codes, Pattern:/youtube?countrycode=code', (done) => {
     chai.request(server)
       .get('/youtube?countryCode=IN')
@@ -52,7 +46,6 @@ describe('Server', function () {
         done();
       });
   });
-
   it('should send Error code 404, when routed to random url', () => {
     return chai.request(server)
       .get('/random')
@@ -63,11 +56,7 @@ describe('Server', function () {
         throw error;
       });
   });
-
 });
-
-
-
 describe('Select Dropdown', function () {
   it('reflects country matching the country code present in url', (done) => {
     chai.request(server)
@@ -78,7 +67,6 @@ describe('Select Dropdown', function () {
         done();
       });
   });
-
   it('should have country code IN when IN passed as query parameter', (done) => {
     chai.request(server)
       .get('/youtube?countryCode=IN')
@@ -88,9 +76,7 @@ describe('Select Dropdown', function () {
         done();
       });
   });
-
 });
-
 describe('Youtube Service', function () {
   it('Service should 24 trend items for any country', async () => {
     mock
@@ -104,7 +90,6 @@ describe('Youtube Service', function () {
         }
       })
       .reply(200, { trends: response });
-
     await axios.get('/', {
       params: {
         part: 'snippet',
@@ -117,10 +102,8 @@ describe('Youtube Service', function () {
       .then(function (response) {
         // console.log(response.data.trends.response.length);
         expect(response.data.trends.response).with.lengthOf(24);
-
       }).catch((error) => {
         throw error;
       });;
-
   })
 });
