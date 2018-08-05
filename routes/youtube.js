@@ -7,17 +7,22 @@ const service = new YoutubeService();
 
 /* GET home page. */
 router.get('/', async (req, res) => {
-  const trends = await service.getTrendingVideos();
+  const countryCode = req.query.countryCode;
+  const trends = await service.getTrendingVideos(countryCode);
   res.render('youtube/index', {
     title: config.title,
     videos: trends,
-    countryList: config.countryList
+    countryList: config.countryList,
+    selectedCountry: countryCode || "AF"
   });
 });
 
 router.get('/:videoId', async (req, res) => {
+  const countryCode = req.query.countryCode;
   res.render('youtube/player', {
-    title: config.title
+    title: config.title,
+    countryList: config.countryList || "AF",
+    selectedCountry: countryCode || "AF"
   });
 });
 
