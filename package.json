@@ -20,6 +20,7 @@
     "bootstrap-select": "^1.13.1",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "compression": "^1.7.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "eslint": "^5.0.1",
