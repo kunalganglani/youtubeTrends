@@ -17,8 +17,7 @@ export class YoutubeService {
     };
 
     var result = [];
-
-    return axios.get('/', {params: trendingVidParams}).then(async function(res){
+    let callBack = async function(res){
       result = res.data.items;
       for (var i = 0; i < result.length; i++) {
         result[i] = {
@@ -31,7 +30,8 @@ export class YoutubeService {
       }
 
       return result;
-    });
+    };
+    return axios.get('/', {params: trendingVidParams}).then(callBack);
 
   }
 
