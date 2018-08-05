@@ -48,26 +48,6 @@ describe('Server', function () {
       });
   });
 
-  it('dropdown reflects country matching the country code present in url', (done) => {
-    chai.request(server)
-      .get('/youtube')
-      .end(function (err, res) {
-        const dom = new JSDOM(`${res.text}`);
-        expect( (dom.window.document.querySelector("select").value) ).to.equal('AF');
-        done();
-      });
-  });
-
-  it('dropdown should have country code IN when IN passed as query parameter', (done) => {
-    chai.request(server)
-      .get('/youtube?countryCode=IN')
-      .end(function (err, res) {
-        const dom = new JSDOM(`${res.text}`);
-        expect( (dom.window.document.querySelector("select").value) ).to.equal('IN');
-        done();
-      });
-  });
-
   it('should send Error code 404, when routed to random url', ()=> {
     return chai.request(server)
     .get('/random')
@@ -77,11 +57,40 @@ describe('Server', function () {
     .catch((error) => {
       throw error;
     });
-  })
+  });
 
-  it('Service should 24 trend items for any country', async () => {
-    const service = new YoutubeService();
-    const trends = await service.getTrendingVideos();
-    expect((trends).length).to.equal(24);
-  })
 });
+
+
+  
+  describe('Select Dropdown', function () {
+    it('reflects country matching the country code present in url', (done) => {
+      chai.request(server)
+        .get('/youtube')
+        .end(function (err, res) {
+          const dom = new JSDOM(`${res.text}`);
+          expect( (dom.window.document.querySelector("select").value) ).to.equal('AF');
+          done();
+        });
+    });
+  
+    it('should have country code IN when IN passed as query parameter', (done) => {
+      chai.request(server)
+        .get('/youtube?countryCode=IN')
+        .end(function (err, res) {
+          const dom = new JSDOM(`${res.text}`);
+          expect( (dom.window.document.querySelector("select").value) ).to.equal('IN');
+          done();
+        });
+    });
+  
+  });
+
+  describe('Youtube Service', function () {
+    it('Service should 24 trend items for any country', async () => {
+      const service = new YoutubeService();
+      const trends = await service.getTrendingVideos();
+      expect((trends).length).to.equal(24);
+    })  
+  });
+  
