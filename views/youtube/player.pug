@@ -3,7 +3,8 @@ extends ../index
 block player
   div(id='youtube-player')
     div(class='video-container')
+       iframe(width='100%' height='100%' src='https://www.youtube.com/embed/' + videoId + '?autoplay=1' frameborder='0' allowfullscreen)
 
     div(class='controls')
       a(class='btn btn-primary', href='/youtube?countryCode='+selectedCountry) < Back to Trends
-  script(src='/javascripts/youtube.player.js')
+  //- script(src='/javascripts/youtube.player.js')
