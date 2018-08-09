@@ -8,7 +8,7 @@ const axios = Axios.create({
 
 export class YoutubeService {
   getTrendingVideos(countryCode = 'AF') {
-    var trendingVidParams = {
+    const trendingVidParams = {
       part: 'snippet',
       chart: 'mostPopular',
       regionCode: countryCode, // replaced with country code from countryList
@@ -16,10 +16,10 @@ export class YoutubeService {
       key: config.youtubeApi.key
     };
 
-    var result = [];
+    let result = [];
     let callBack = async function(res){
       result = res.data.items;
-      for (var i = 0; i < result.length; i++) {
+      for (let i = 0; i < result.length; i++) {
         result[i] = {
           id: result[i].id,
           title: result[i].snippet.title,
@@ -36,14 +36,14 @@ export class YoutubeService {
   }
 
   static getVideoDetails(video) {
-    var vidDetailsparams = {
+    const vidDetailsparams = {
       part: 'statistics',
       id: video.id,
       key: config.youtubeApi.key
     };
 
     return axios.get('/', {params: vidDetailsparams}).then(function(res) {
-      var result = res.data;
+      const result = res.data;
       video.viewCount = result['items'][0].statistics.viewCount;
       video.likeCount = result['items'][0].statistics.likeCount;
 
